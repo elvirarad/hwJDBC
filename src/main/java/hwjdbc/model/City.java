@@ -1,4 +1,4 @@
-package me.elvira.hwjdbc.model;
+package hwjdbc.model;
 
 import lombok.Data;
 

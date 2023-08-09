@@ -1,7 +1,6 @@
-package me.elvira.hwjdbc.dao;
+package hwjdbc.dao;
 
-import me.elvira.hwjdbc.model.City;
-import me.elvira.hwjdbc.model.Employee;
+import hwjdbc.model.City;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

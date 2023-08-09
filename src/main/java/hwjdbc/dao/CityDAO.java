@@ -1,6 +1,6 @@
-package me.elvira.hwjdbc.dao;
+package hwjdbc.dao;
 
-import me.elvira.hwjdbc.model.City;
+import hwjdbc.model.City;
 
 public interface CityDAO {
     City findById(Integer id);

@@ -1,9 +1,6 @@
-package me.elvira.hwjdbc;
+package hwjdbc;
 
-import me.elvira.hwjdbc.dao.CityDAOImpl;
-import me.elvira.hwjdbc.dao.EmployeeDAOImpl;
-import me.elvira.hwjdbc.model.City;
-import me.elvira.hwjdbc.model.Employee;
+import hwjdbc.dao.EmployeeDAOImpl;
 
 import java.sql.*;
 
@@ -38,11 +35,10 @@ public class HwJdbcApplication {
                 String first_name = " first_name: " + resultSet.getString("first_name");
                 String last_name = " last_name: " + resultSet.getString("last_name");
                 String gender = " gender: " + resultSet.getString("gender");
-                String city = " city: " + resultSet.getString("city_name");
                 int age = resultSet.getInt(4);
-
+                String city = " city: " + resultSet.getString("city_name");
                 // Выводим данные в консоль
-                System.out.println("id: " + resultSet.getInt("id") + first_name + last_name + " Age: " + age + gender + city);
+                System.out.println("id: " + resultSet.getInt("id") + first_name + last_name + gender + " Age: " + age  + city);
 
             }
         } catch (SQLException e){
@@ -51,14 +47,18 @@ public class HwJdbcApplication {
 
         Connection connection = DriverManager.getConnection(url, user, password);
 
-        CityDAOImpl cityDAO = new CityDAOImpl(connection);
-        System.out.println(cityDAO.findById(2));
-
-//        EmployeeDAOImpl employeeDAO = new EmployeeDAOImpl(connection);
-//        System.out.println(employeeDAO.findById(10));
-
+//        CityDAOImpl cityDAO = new CityDAOImpl(connection);
+//        System.out.println(cityDAO.findById(2));
+//
         EmployeeDAOImpl employeeDAO = new EmployeeDAOImpl(connection);
-        employeeDAO.create(new Employee(11, "Tom", "Ford", "men", 24, 4));
-        System.out.println(employeeDAO.findById(11));
+        System.out.println(employeeDAO.findById(10));
+
+        //EmployeeDAOImpl employeeDAO = new EmployeeDAOImpl(connection);
+//        employeeDAO.create(new Employee(1, "Helga", "Wolf", "women", 18, 1));
+//        System.out.println(employeeDAO.findById(1));
+
+//        System.out.println(employeeDAO.findById(1));
+//        employeeDAO.deleteById(1);
+
     }
 }
