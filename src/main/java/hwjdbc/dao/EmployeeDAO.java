@@ -9,8 +9,10 @@ public interface EmployeeDAO {
 
     void create(Employee employee);
 
-    void deleteById(int id);
+     List<Employee> findAllEmployee();
 
-    void getAllEmployee();
+    void deleteById(Integer id);
+
+    void update (Employee employee);
 
 }
