@@ -27,6 +27,5 @@ public class HwJdbcApplication {
         employeeDAO.update(byId);
         System.out.println(byId);
         System.out.println(employeeDAO.findById(4));
-
     }
 }
