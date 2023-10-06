@@ -1,4 +1,4 @@
-package hwjdbc;
+package hwjdbc.utils;
 
 import hwjdbc.model.City;
 import hwjdbc.model.Employee;
