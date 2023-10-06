@@ -2,14 +2,10 @@ package hwjdbc.dao;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import hwjdbc.HibernateSessionFactoryUtil;
+import hwjdbc.utils.HibernateSessionFactoryUtil;
 import hwjdbc.model.Employee;
 
 import javax.persistence.Query;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
 
 import java.util.List;
@@ -29,6 +25,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
             try (session) {
                 Transaction transaction = session.beginTransaction();
                 session.save(employee);
+//                session.persist(employee);
                 transaction.commit();
             }
         }
@@ -46,7 +43,6 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         try (session){
             Transaction transaction = session.beginTransaction();
-
             Query query = session.createNativeQuery("DELETE FROM Employee WHERE id = :id");
             query.setParameter("id", id);
             query.executeUpdate();

@@ -1,42 +1,66 @@
 package hwjdbc.dao;
 
+import hwjdbc.utils.HibernateSessionFactoryUtil;
 import hwjdbc.model.City;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import javax.persistence.Query;
+import java.util.List;
 
 public class CityDAOImpl implements CityDAO {
 
-    private final Connection connection;
-
-    public CityDAOImpl(Connection connection){
-        this.connection = connection;
-    }
-
     @Override
-    public City findById(Integer id) {
-        try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM city WHERE city_id = (?)")) {
-            preparedStatement.setInt(1, id);
-            preparedStatement.setMaxRows(1);
-
-            ResultSet resultSet = preparedStatement.executeQuery();
-            resultSet.next();
-
-            return City.create(resultSet);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+    public void create(City city) {
+        try (Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()){
+            Transaction transaction = session.beginTransaction();
+            session.save(city);
+            transaction.commit();
         }
     }
 
     @Override
-    public void create(City city) {
-
+    public City findById(Integer id) {
+        try (Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
+            return session.get(City.class, id);
+        }
     }
+
 
     @Override
     public void deleteById(Integer id) {
+        try (Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()){
+            Transaction transaction = session.beginTransaction();
 
+            Query query = session.createNativeQuery("DELETE FROM Employee WHERE id = :id");
+            query.setParameter("id", id);
+            query.executeUpdate();
+            transaction.commit();
+        }
+    }
+
+    @Override
+    public void delete(City city) {
+        try (Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()){
+            Transaction transaction = session.beginTransaction();
+            session.remove(city);
+            transaction.commit();
+        }
+    }
+
+    @Override
+    public List<City> findAll() {
+        try (Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
+            return session.createQuery("FROM City ").list();
+        }
+    }
+
+    @Override
+    public void update(City city){
+        try (Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()){
+            Transaction transaction = session.beginTransaction();
+            session.update(city);
+            transaction.commit();
+        }
     }
 }
